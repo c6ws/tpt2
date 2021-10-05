@@ -1,9 +1,7 @@
 # Snake on Powerstones
 This is a set of scripts that allow you to play snake on powerstones
 
-Note:
 The scripts were made in the in-game editor, so there are no `.tpt2` files
-
 No `turbo v2` support yet 
 
 ## Requirements
@@ -12,6 +10,13 @@ No `turbo v2` support yet
 
 Not required to run, but recommended:
 https://github.com/Xenos6666/TPT2_scripts/tree/main/common/execution_stack
+
+## How to play
+Controls: `Y` to start the script, `WASD` for movement
+
+Set `boardwidth` and `boardlength` in `snakecalc` to your powerstone board size (`boardwidth` can not be larger than 14)
+
+Set `framerepeat` in `snakedraw` to how many times you want the frames to repeat (for game speed)
 
 ## Import codes
 Script bundle
