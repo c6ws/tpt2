@@ -3,10 +3,14 @@ This is a set of scripts that allow you to play snake on powerstones
 
 Note:
 The scripts were made in the in-game editor, so there are no `.tpt2` files
+No `turbo v2` support yet 
 
 ## Requirements
 - Dynamic UI scaling must be off
 - 8 scripts and 21 max. lines in Facility AI
+
+Not required to run, but recommended:
+https://github.com/Xenos6666/TPT2_scripts/tree/main/common/execution_stack
 
 ## Import codes
 Script bundle
