@@ -1,6 +1,9 @@
 # Snake on Powerstones
 This is a set of scripts that allow you to play snake on powerstones
 
+Note:
+The scripts were made in the in-game editor, so there are no `.tpt2` files
+
 ## Requirements
 - Dynamic UI scaling must be off
 - 8 scripts and 21 max. lines in Facility AI
