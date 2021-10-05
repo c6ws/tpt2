@@ -2,8 +2,8 @@
 This is a set of scripts that allow you to play snake on powerstones
 
 ## Requirements
--Dynamic UI scaling must be off
--8 scripts and 21 max. lines in Facility AI
+- Dynamic UI scaling must be off
+- 8 scripts and 21 max. lines in Facility AI
 
 ## Import codes
 Script bundle
