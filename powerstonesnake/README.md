@@ -19,6 +19,8 @@ Set `boardwidth` and `boardlength` in `snakecalc` to your powerstone board size 
 
 Set `framerepeat` in `snakedraw` to how many times you want the frames to repeat (for game speed)
 
+The game follows traditional snake rules. Guide the snake to the food and don't let your snake collide with itself.
+
 ## Import codes
 Script bundle
 ```
