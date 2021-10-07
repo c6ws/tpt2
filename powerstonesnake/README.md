@@ -9,7 +9,7 @@ No `turbo v2` support yet
 - Dynamic UI scaling must be off
 - 8 scripts and 21 max. lines in Facility AI
 
-### Not required to run, but recommended for faster script execution:
+**Not required to run, but recommended for faster script execution:**
 https://github.com/Xenos6666/TPT2_scripts/tree/main/common/execution_stack
 
 OR
