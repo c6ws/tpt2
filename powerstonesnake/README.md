@@ -1,8 +1,6 @@
 # Snake on Powerstones
 This is a set of scripts that allows you to play snake on powerstones
 
-The scripts were made in the in-game editor, so there are no `.tpt2` files
-
 No `turbo v2` support yet 
 
 ## Requirements
