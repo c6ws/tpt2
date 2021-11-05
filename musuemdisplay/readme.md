@@ -8,7 +8,9 @@ v2 - https://github.com/Xenos6666/TPT2_scripts/tree/main/common/turbo_exec
 ## Requirements
 - 1 script and 14 lines in the Facility AI
 - Turbo scripts (Turbo V2 is recommended for frame syncing, but the execution stack can be used instead)
+
 v1 - https://github.com/Xenos6666/TPT2_scripts/tree/main/common/execution_stack
+
 v2 - https://github.com/Xenos6666/TPT2_scripts/tree/main/common/turbo_exec
 
 ## How to use
