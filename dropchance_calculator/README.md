@@ -7,7 +7,7 @@ This script will calculate the current dropchance, peak dropchance, and average 
 ## How to Use
 Set `dropchancefactor` to your dropchance factor. This information can be found in town stats. Default is 1.0.
 
-Set `basemoduledropchance` to the base dropchance of the module. This information can be found in the wiki or with the treasure map skill. Default is 0.01 or 1%.
+Set `basemoduledropchance` to the base dropchance of the module. This information can be found in the wiki or with the treasure map exotic skill. Default is 0.01 or 1%.
 
 Set `difficulty` to the difficulty of the tower testing run. Default is "easy".
 
