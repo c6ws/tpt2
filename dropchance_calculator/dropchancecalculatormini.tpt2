@@ -1,0 +1,30 @@
+;dropchancecalculatormini
+
+key.b()
+
+#difficultyfactor (1.0 + (0.25 * (floor(i2d(index("{difficultystring}",difficulty,0))/10.0))))
+#difficultystring easy----------------mediumhard----------insane----nightmare-impossible
+
+:global double dropchancethiswave
+:global double dropchancefactor
+:global double basemoduledropchance
+:global double peakdropchance
+:global string difficulty
+:global double averagedropchance
+:global double averagesamplesize
+:global double addeddropchance
+
+isTowerTesting() == true
+
+dropchancefactor = 1.0
+basemoduledropchance = 0.01
+difficulty = "easy"
+
+dropchanceloop:
+; module dropchance formula is (difficulty factor * base module dropchance * dropchance factor * log10(wave/10))
+dropchancethiswave = ({difficultyfactor} * basemoduledropchance * dropchancefactor * (((wave()/10.0)+(era()*1e11)+(infinity()*1e22))//10.0))
+peakdropchance = max(peakdropchance , dropchancethiswave)
+averagesamplesize += 1.0
+addeddropchance += dropchancethiswave
+averagedropchance = (addeddropchance/averagesamplesize)
+goto(dropchanceloop)
