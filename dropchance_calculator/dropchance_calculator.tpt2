@@ -26,7 +26,7 @@ basemoduledropchance = 0.01
 difficulty = "easy"
 
 dropchanceloop:
-; module dropchance formula is (difficulty factor * dropchance factor * base module dropchance * log(wave/10)
+; module dropchance formula is (difficulty factor * dropchance factor * base module dropchance * log(wave/10))
 dropchancethiswave = ({difficultyfactor} * basemoduledropchance * dropchancefactor * ((wave()/10.0)//10.0))
 peakdropchance = max(peakdropchance , dropchancethiswave)
 averagesamplesize += 1.0
