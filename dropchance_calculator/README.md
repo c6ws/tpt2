@@ -2,7 +2,7 @@
 This script will calculate the current dropchance, peak dropchance, and average dropchance.
 
 ## Requirements
-1 script, 1 condition, 1 impulse, and 15 lines unlocked in the Facility AI for the main script.
+1 script, 1 condition, 1 impulse, and 14 lines unlocked in the Facility AI for the main script.
 
 1 script, 1 condition, 1 impulse, and 9 lines unlocked in the Facility AI for the minimal script.
 
