@@ -3,8 +3,20 @@
 key.b()
 
 #difficultyfactor (1.0 + (0.25 * (floor(i2d(index("{difficultystring}",difficulty,0))/10.0))))
-#difficultystring easy----------------mediumhard----------insane----nightmare-impossible
-#unsetstring dropchancethiswavepeakdropchance----averagesamplesize-addeddropchance---averagedropchance-
+
+#difficultystring easy------\
+----------\
+mediumhard\
+----------\
+insane----\
+nightmare-\
+impossible
+
+#unsetstring dropchancethiswave-\
+peakdropchance-----\
+averagesamplesize--\
+addeddropchance----\
+averagedropchance--
 
 :global double dropchancethiswave
 :global double dropchancefactor
@@ -20,7 +32,7 @@ key.b()
 isTowerTesting() == true
 
 dropchancetoggle = 1 - dropchancetoggle
-gotoif(end , dropchancetoggle==0)
+gotoif(99, dropchancetoggle==0)
 dropchancefactor = 1.0
 basemoduledropchance = 0.01
 difficulty = "easy"
@@ -32,10 +44,9 @@ peakdropchance = max(peakdropchance , dropchancethiswave)
 averagesamplesize += 1.0
 addeddropchance += dropchancethiswave
 averagedropchance = (addeddropchance/averagesamplesize)
-goto(dropchanceloop)
+gotoif(dropchanceloop, dropchancetoggle==1)
 
 end:
-unsetincrement = (unsetincrement + 1) % 5
-gu(sub("{unsetstring}", unsetincrement * 18 ,index("{unsetstring}" , "-" , unsetincrement*18)))
-gotoif(end, unsetincrement <=5)
-stop("dropchance_calculator")
+unsetincrement = (unsetincrement % 5) + 1
+gu(sub("{unsetstring}" , (unsetincrement - 1) * 19, (index("{unsetstring}", "-", (unsetincrement - 1)*19) - (unsetincrement - 1) *19)))
+gotoif(end, unsetincrement < 5)
