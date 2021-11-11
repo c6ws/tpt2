@@ -37,5 +37,5 @@ goto(dropchanceloop)
 end:
 unsetincrement = (unsetincrement + 1) % 5
 gu(sub("{unsetstring}", unsetincrement * 18 ,index("{unsetstring}" , "-" , unsetincrement*18)))
-gotoif(end, unsetincrement>=5)
+gotoif(end, unsetincrement <=5)
 stop("dropchance_calculator")
