@@ -3,7 +3,13 @@
 key.b()
 
 #difficultyfactor (1.0 + (0.25 * (floor(i2d(index("{difficultystring}",difficulty,0))/10.0))))
-#difficultystring easy----------------mediumhard----------insane----nightmare-impossible
+#difficultystring easy------\
+----------\
+mediumhard\
+----------\
+insane----\
+nightmare-\
+impossible
 
 :global double dropchancethiswave
 :global double dropchancefactor
