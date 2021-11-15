@@ -1,5 +1,5 @@
 # Module Dropchance Calculator
-This script will calculate the current dropchance, peak dropchance, and average dropchance.
+This script will calculate the current dropchance, peak dropchance, and dropchance per second.
 
 ## Requirements
 1 script, 1 condition, 1 impulse, and 14 lines unlocked in the Facility AI for the main script.
