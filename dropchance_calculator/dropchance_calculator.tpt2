@@ -4,7 +4,8 @@ key.b()
 
 #difficultyfactor (1.0 + (0.25 * (floor(i2d(index("{difficultystring}",difficulty,0))/10.0))))
 
-#difficultystring easy------\
+#difficultystring \
+easy------\
 ----------\
 mediumhard\
 ----------\
@@ -12,11 +13,10 @@ insane----\
 nightmare-\
 impossible
 
-#unsetstring dropchancethiswave-\
-peakdropchance-----\
-averagesamplesize--\
-addeddropchance----\
-averagedropchance--
+#unsetstring \
+dropchancethiswave--\
+peakdropchance------\
+dropchancepersecond-\
 
 :global double dropchancethiswave
 :global double dropchancefactor
@@ -24,10 +24,9 @@ averagedropchance--
 :global double peakdropchance
 :global string difficulty
 :global int dropchancetoggle
-:global double averagedropchance
-:global double averagesamplesize
-:global double addeddropchance
-:global int unsetincrement
+:local double savedtimestamp
+:global double dropchancepersecond
+:local int unsetincrement
 
 isTowerTesting() == true
 
@@ -37,16 +36,24 @@ dropchancefactor = 1.0
 basemoduledropchance = 0.01
 difficulty = "easy"
 
+outerloop:
+waituntil(health(false) != 0.)
+savedtimestamp = now()
+
 dropchanceloop:
 ; module dropchance formula is (difficulty factor * dropchance factor * base module dropchance * log(wave/10))
 dropchancethiswave = ({difficultyfactor} * basemoduledropchance * dropchancefactor * (((wave()/10.0)+(era()*1e11)+(infinity()*1e22))//10.0))
 peakdropchance = max(peakdropchance , dropchancethiswave)
-averagesamplesize += 1.0
-addeddropchance += dropchancethiswave
-averagedropchance = (addeddropchance/averagesamplesize)
-gotoif(dropchanceloop, dropchancetoggle==1)
+dropchancepersecond = dropchancethiswave/((now() - savedtimestamp)/1e7)
+goto(if(dropchancetoggle == 1,\
+	if(health(false)!=0.,\
+		dropchanceloop,\
+		outerloop\
+	),\
+  end\
+))
 
 end:
-unsetincrement = (unsetincrement % 5) + 1
-gu(sub("{unsetstring}" , (unsetincrement - 1) * 19, (index("{unsetstring}", "-", (unsetincrement - 1)*19) - (unsetincrement - 1) *19)))
-gotoif(end, unsetincrement < 5)
+unsetincrement += 1
+gu(sub("{unsetstring}" , (unsetincrement - 1) * 20, (index("{unsetstring}", "-", (unsetincrement - 1)*20) - (unsetincrement - 1) *20)))
+gotoif(end, unsetincrement < 3)
