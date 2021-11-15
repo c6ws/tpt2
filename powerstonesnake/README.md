@@ -9,11 +9,11 @@ No `turbo v2` support yet
 
 **Not required to run, but recommended for faster script execution:**
 
-https://github.com/Xenos6666/TPT2_scripts/tree/main/common/execution_stack
+[Turbo V1 (Execution Stack)](https://github.com/Xenos6666/TPT2_scripts/tree/main/common/execution_stack)
 
 OR
 
-https://github.com/Xenos6666/TPT2_scripts/tree/main/common/turbo_exec used with `turbo exec toggle` from https://github.com/Xenos6666/TPT2_scripts/blob/main/common/utilities/README.md
+[Turbo V2](https://github.com/Xenos6666/TPT2_scripts/tree/main/common/turbo_exec) used with [turbo exec toggle](https://github.com/Xenos6666/TPT2_scripts/blob/main/common/utilities/README.md)
 
 ## How to play
 Controls: `Y` to start the script, `WASD` for movement
