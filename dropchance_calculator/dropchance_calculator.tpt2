@@ -28,8 +28,6 @@ dropchancepersecond-\
 :global double dropchancepersecond
 :local int unsetincrement
 
-isTowerTesting() == true
-
 dropchancetoggle = 1 - dropchancetoggle
 gotoif(99, dropchancetoggle==0)
 dropchancefactor = 1.0
