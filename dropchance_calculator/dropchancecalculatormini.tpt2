@@ -22,8 +22,6 @@ impossible
 :local double savedtimestamp
 :global double dropchancepersecond
 
-isTowerTesting() == true
-
 dropchancefactor = 1.0
 basemoduledropchance = 0.01
 difficulty = "easy"
