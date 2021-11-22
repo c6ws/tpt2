@@ -1,6 +1,12 @@
 :name dropchance_calculator
 
 key.b()
+game.newround()
+
+impulse() != \
+if(sub(dropchancetoggle, 0, 1) == "0",\
+	"game.newround",\
+"69lol")
 
 #difficultyfactor (1.0 + (0.25 * (floor(i2d(index("{difficultystring}",difficulty,0))/10.0))))
 
@@ -18,24 +24,50 @@ dropchancethiswave--\
 peakdropchance------\
 dropchancepersecond-\
 
+#digits "01"
+
 :global double dropchancethiswave
 :global double dropchancefactor
 :global double basemoduledropchance
 :global double peakdropchance
 :global string difficulty
-:global int dropchancetoggle
+:global string dropchancetoggle
 :local double savedtimestamp
 :global double dropchancepersecond
 :local int unsetincrement
 
-dropchancetoggle = 1 - dropchancetoggle
-gotoif(99, dropchancetoggle==0)
+; this string is two ints concatted together.
+; first int handles the toggling of the script
+; second int handles the timestamp reset 
+dropchancetoggle = \
+if(impulse()=="key.b",\
+	1 - \
+    if(sub(dropchancetoggle, 0, 1) != "",\
+    	index({digits}, sub(dropchancetoggle, 0, 1), 0),\
+	0),\
+index({digits}, sub(dropchancetoggle, 0, 1), 0)) . \
+if(impulse()=="game.newround"|\
+sub(dropchancetoggle, 1, 1) == "",\
+	"1",\
+	sub(dropchancetoggle, 1, 1)\
+)
+
+gotoif(99,\
+sub(dropchancetoggle, 0, 1)=="0"|\
+impulse()=="game.newround")
+
+; init
 dropchancefactor = 1.0
 basemoduledropchance = 0.01
 difficulty = "easy"
 
-outerloop:
-waituntil(health(false) != 0.)
+wait:
+gotoif(\
+if(sub(dropchancetoggle, 0, 1) == "1",\
+	wait,\
+end),\
+health(false) == 0.0)
+dropchancetoggle = sub(dropchancetoggle , 0, 1) . 0
 savedtimestamp = now()
 
 dropchanceloop:
@@ -43,13 +75,13 @@ dropchanceloop:
 dropchancethiswave = ({difficultyfactor} * basemoduledropchance * dropchancefactor * (((wave()/10.0)+(era()*1e11)+(infinity()*1e22))//10.0))
 peakdropchance = max(peakdropchance , dropchancethiswave)
 dropchancepersecond = dropchancethiswave/((now() - savedtimestamp)/1e7)
-goto(if(dropchancetoggle == 1,\
-	if(health(false)!=0.,\
-		dropchanceloop,\
-		outerloop\
-	),\
-	end\
-))
+goto(\
+if(sub(dropchancetoggle, 0, 1) == "1",\
+	if(health(false) == 0.|\
+    sub(dropchancetoggle, 1, 1) == "1",\
+    	wait,\
+	dropchanceloop),\
+end))
 
 end:
 unsetincrement += 1
