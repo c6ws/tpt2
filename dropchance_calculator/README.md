@@ -15,6 +15,8 @@ Set `difficulty` to the difficulty of the tower testing run. Default is "easy".
 
 Press the key `b` to start/stop the script.
 
+**Do not change the impulse unless you know what you're doing! Some parts of the script depend on the current impulses.**
+
 ## Import Codes
 `dropchance_calculator`
 1 script, 1 conditions, 15 lines
