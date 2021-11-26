@@ -1,5 +1,5 @@
 # Module Dropchance Calculator
-This script will calculate the current dropchance, peak dropchance, and dropchance per second.
+This script will calculate the current dropchance, peak dropchance, and dropchance per second. (Note: `dropchancepersecond` is not the dropchance gained per second, but instead it's `dropchancethiswave`/time. I do not know a better name for it so ping me on discord if you do.
 
 ## Requirements
 1 script, 1 conditions, 2 impulse, and 15 lines unlocked in the Facility AI for the main script.
