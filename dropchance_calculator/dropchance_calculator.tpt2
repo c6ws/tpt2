@@ -3,10 +3,7 @@
 key.b()
 game.newround()
 
-impulse() != \
-if(sub(dropchancetoggle, 0, 1) == "0",\
-	"game.newround",\
-"69lol")
+#d dropchance
 
 #difficultyfactor (1.0 + (0.25 * (floor(i2d(index("{difficultystring}",difficulty,0))/10.0))))
 
@@ -19,71 +16,99 @@ insane----\
 nightmare-\
 impossible
 
-#unsetstring \
+#varstr \
+thiswave--\
+peak------\
+persecond-\
+
+#varstr2 \
 dropchancethiswave--\
-peakdropchance------\
+dropchancepeak------\
 dropchancepersecond-\
+savedtimez----------\
 
-#digits "01"
+#wavetotal ((wave()/10.0)+(era()*1e11)+(infinity()*1e22))
 
-:global double dropchancethiswave
-:global double dropchancefactor
-:global double basemoduledropchance
-:global double peakdropchance
-:global string difficulty
-:global string dropchancetoggle
-:local double savedtimestamp
-:global double dropchancepersecond
-:local int unsetincrement
+impulse() != \
+   if({d}toggle == 0,\
+      "game.newround",\
+   "lol")
 
-; this string is two ints concatted together.
-; first int handles the toggling of the script
-; second int handles the timestamp reset 
-dropchancetoggle = \
-if(impulse()=="key.b",\
-	1 - \
-    if(sub(dropchancetoggle, 0, 1) != "",\
-    	index({digits}, sub(dropchancetoggle, 0, 1), 0),\
-	0),\
-index({digits}, sub(dropchancetoggle, 0, 1), 0)) . \
-if(impulse()=="game.newround"|\
-sub(dropchancetoggle, 1, 1) == "",\
-	"1",\
-	sub(dropchancetoggle, 1, 1)\
+:global double {d}peak
+:global double {d}thiswave
+:local double {d}factor
+:local double basemodule{d}
+:local string difficulty
+:global int {d}toggle
+:global double {d}persecond
+:local int i
+
+aaa:
+{d}toggle = \
+if(impulse() != "game.newround",\
+      1 - {d}toggle,\
+   {d}toggle)
+
+timereset:
+gds("savedtimez",\
+   if(impulse() == "game.newround"|\
+   (isTowerTesting()&\
+   gdg("savedtimez") == 0.),\
+      now(),\
+   gdg("savedtimez"))\
 )
 
-gotoif(99,\
-sub(dropchancetoggle, 0, 1)=="0"|\
-impulse()=="game.newround")
+wait:
+goto(\
+   if(impulse() == "game.newround",\
+      69,\
+   if({d}toggle == 1,\
+      if(isTowerTesting(),\
+         starttt,\
+      wait),\
+   69))\
+)
 
-; init
-dropchancefactor = 1.0
-basemoduledropchance = 0.01
+starttt:
+lds("{d}factor", 1.0)
+basemodule{d} = 0.01
 difficulty = "easy"
 
-wait:
-gotoif(\
-if(sub(dropchancetoggle, 0, 1) == "1",\
-	wait,\
-end),\
-health(false) == 0.0)
-dropchancetoggle = sub(dropchancetoggle , 0, 1) . 0
-savedtimestamp = now()
+mainloop:
+gds(\
+   if(i != 0,\
+      "{d}" . sub("{varstr}", (i - 1) * ({len({varstr})}/3), index("{varstr}", "-", (i - 1) * ({len({varstr})}/3)) - ((i - 1) * ({len({varstr})}/3))),\
+   ""),\
+   if(i == 1,\
+      if(isTowerTesting(),\
+         {difficultyfactor} * basemodule{d} * {d}factor * ({wavetotal}//10.0),\
+      1.),\
+   if(i == 2,\
+      max({d}thiswave, {d}peak),\
+   if(i == 3,\
+      {d}thiswave/((now() - gdg("savedtimez"))/1e7),\
+   0.)))\
+)
 
-dropchanceloop:
-; module dropchance formula is (difficulty factor * dropchance factor * base module dropchance * log(wave/10))
-dropchancethiswave = ({difficultyfactor} * basemoduledropchance * dropchancefactor * (((wave()/10.0)+(era()*1e11)+(infinity()*1e22))//10.0))
-peakdropchance = max(peakdropchance , dropchancethiswave)
-dropchancepersecond = dropchancethiswave/((now() - savedtimestamp)/1e7)
+unset:
+i = (i % 4) + 1
+
+gu(\
+   if({d}toggle == 0,\
+      sub("{varstr2}", (i - 1) * 20, index("{varstr2}", "-", (i - 1) * 20) - (i - 1) * 20 ),\
+   "")\
+)
 goto(\
-if(sub(dropchancetoggle, 0, 1) == "1",\
-	if(health(false) == 0.|\
-    sub(dropchancetoggle, 1, 1) == "1",\
-    	wait,\
-	dropchanceloop),\
-end))
-
-end:
-unsetincrement += 1
-gu(sub("{unsetstring}" , (unsetincrement - 1) * 20, (index("{unsetstring}", "-", (unsetincrement - 1)*20) - (unsetincrement - 1) *20)))
-gotoif(end, unsetincrement < 3)
+   if({d}toggle == 1,\
+      if(isTowerTesting(),\
+         if(gdg("savedtimez") != 0.,\
+            mainloop,\
+         timereset),\
+      wait),\
+   if({d}thiswave == 0.&\
+   {d}persecond == 0.&\
+   {d}peak == 0.&\
+   gdg("savedtimez") == 0.,\
+      69,\
+   unset))\
+)
