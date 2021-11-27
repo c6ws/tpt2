@@ -1,8 +1,19 @@
 :name dropchancecalculatormini
 
 key.b()
+game.newround()
 
-#difficultyfactor (1.0 + (0.25 * (floor(i2d(index("{difficultystring}",difficulty,0))/10.0))))
+; Only edit these macros!
+; Don't touch the others unless
+; you're trying to make modifications to the script.
+; Note: The numbers are not in percent form. 0.01 = 1%
+#basemoduledropchance 0.01
+#difficulty easy
+#dropchancefactor 1.0
+
+#d dropchance
+
+#difficultyfactor (1.0 + (0.25 * (floor(i2d(index("{difficultystring}","{difficulty}",0))/10.0))))
 
 #difficultystring \
 easy------\
@@ -13,29 +24,97 @@ insane----\
 nightmare-\
 impossible
 
-:global double dropchancethiswave
-:global double dropchancefactor
-:global double basemoduledropchance
-:global double peakdropchance
-:global string difficulty
-:global int dropchancetoggle
-:local double savedtimestamp
-:global double dropchancepersecond
+#varstr \
+thiswave--\
+peak------\
+persecond-\
 
-dropchancefactor = 1.0
-basemoduledropchance = 0.01
-difficulty = "easy"
+#varstr2 \
+dropchancethiswave--\
+dropchancepeak------\
+dropchancepersecond-\
+savedtimez----------\
 
-outerloop:
-waituntil(health(false) != 0.)
-savedtimestamp = now()
+#wavetotal ((wave()/10.0)+(era()*1e11)+(infinity()*1e22))
 
-dropchanceloop:
-; module dropchance formula is (difficulty factor * dropchance factor * base module dropchance * log(wave/10))
-dropchancethiswave = ({difficultyfactor} * basemoduledropchance * dropchancefactor * (((wave()/10.0)+(era()*1e11)+(infinity()*1e22))//10.0))
-peakdropchance = max(peakdropchance , dropchancethiswave)
-dropchancepersecond = dropchancethiswave/((now() - savedtimestamp)/1e7)
-goto(if(health(false)!=0.,\
-	dropchanceloop,\
-	outerloop\
-))
+impulse() != \
+   if({d}toggle == 0,\
+      "game.newround",\
+   "lol")
+
+:global double {d}peak
+:global double {d}thiswave
+:local double {d}factor
+:local double basemodule{d}
+:local string difficulty
+:global int {d}toggle
+:global double {d}persecond
+:local int i
+
+aaa:
+{d}toggle = \
+if(impulse() != "game.newround",\
+      1 - {d}toggle,\
+   {d}toggle)
+
+timereset:
+gds("savedtimez",\
+   if(impulse() == "game.newround"|\
+   (isTowerTesting()&\
+   gdg("savedtimez") == 0.),\
+      now(),\
+   gdg("savedtimez"))\
+)
+
+wait:
+goto(\
+   if(impulse() == "game.newround",\
+      69,\
+   if({d}toggle == 1,\
+      if(isTowerTesting(),\
+         starttt,\
+      wait),\
+   69))\
+)
+
+; (placeholder)
+starttt:
+
+mainloop:
+gds(\
+   if(i != 0,\
+      "{d}" . sub("{varstr}", (i - 1) * ({len({varstr})}/3), index("{varstr}", "-", (i - 1) * ({len({varstr})}/3)) - ((i - 1) * ({len({varstr})}/3))),\
+   ""),\
+   if(i == 1,\
+      if(isTowerTesting(),\
+         {difficultyfactor} * {basemodule{d}} * {{d}factor} * ({wavetotal}//10.0),\
+      1.),\
+   if(i == 2,\
+      max({d}thiswave, {d}peak),\
+   if(i == 3,\
+      {d}thiswave/((now() - gdg("savedtimez"))/1e7),\
+   0.)))\
+)
+
+unset:
+i = (i % 4) + 1
+
+gu(\
+   if({d}toggle == 0,\
+      sub("{varstr2}", (i - 1) * 20, index("{varstr2}", "-", (i - 1) * 20) - (i - 1) * 20 ),\
+   "")\
+)
+goto(\
+   if({d}toggle == 1,\
+      if(isTowerTesting(),\
+         if(gdg("savedtimez") != 0.,\
+            mainloop,\
+         timereset),\
+      wait),\
+   if({d}thiswave == 0.&\
+   {d}persecond == 0.&\
+   {d}peak == 0.&\
+   gdg("savedtimez") == 0.,\
+      69,\
+   unset))\
+)
