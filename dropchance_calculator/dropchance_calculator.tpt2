@@ -45,7 +45,7 @@ impulse() != \
 
 aaa:
 {d}toggle = \
-if(impulse() != "game.newround",\
+   if(impulse() != "game.newround",\
       1 - {d}toggle,\
    {d}toggle)
 
