@@ -80,9 +80,9 @@ gds(\
       "{d}" . sub("{varstr}", (i - 1) * ({len({varstr})}/3), index("{varstr}", "-", (i - 1) * ({len({varstr})}/3)) - ((i - 1) * ({len({varstr})}/3))),\
    ""),\
    if(i == 1,\
-      if(wave() > 10.&\
-      era() != 0.&\
-      infinity() != 0.,\
+      if(wave() > 10.|\
+      (era() > 0.&\
+      infinity() > 0.),\
          {difficultyfactor} * basemodule{d} * {d}factor * ({wavetotal}//10.0),\
       0.),\
    if(i == 2,\
