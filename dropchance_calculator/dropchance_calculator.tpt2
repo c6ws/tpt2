@@ -66,7 +66,7 @@ goto(\
       if(isTowerTesting(),\
          starttt,\
       wait),\
-   69))\
+   unset))\
 )
 
 starttt:
@@ -82,7 +82,7 @@ gds(\
    if(i == 1,\
       if(isTowerTesting(),\
          {difficultyfactor} * basemodule{d} * {d}factor * ({wavetotal}//10.0),\
-      1.),\
+      0.),\
    if(i == 2,\
       max({d}thiswave, {d}peak),\
    if(i == 3,\
