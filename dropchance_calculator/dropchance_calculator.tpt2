@@ -1,6 +1,8 @@
 :name dropchance_calculator
 
 key.b()
+
+; Do not change this impulse! This allows for time reset.
 game.newround()
 
 #d dropchance
@@ -29,6 +31,7 @@ savedtimez----------\
 
 #wavetotal ((wave()/10.0)+(era()*1e11)+(infinity()*1e22))
 
+; switches the condition (impulse !== newround) if toggle is off
 impulse() != \
    if({d}toggle == 0,\
       "game.newround",\
@@ -50,6 +53,7 @@ aaa:
    {d}toggle)
 
 timereset:
+; sets savedtimez to timestamp if impulse == newround or (is towertesting & savedtimez is not yet set).
 gds("savedtimez",\
    if(impulse() == "game.newround"|\
    (isTowerTesting()&\
@@ -59,6 +63,7 @@ gds("savedtimez",\
 )
 
 wait:
+; stops the current instance if impulse == newround. if toggle is on, then if is towertesting, goto starttt, else goto wait, else, goto unset
 goto(\
    if(impulse() == "game.newround",\
       69,\
@@ -70,11 +75,13 @@ goto(\
 )
 
 starttt:
+; initialize factors
 lds("{d}factor", 1.0)
 basemodule{d} = 0.01
 difficulty = "easy"
 
 mainloop:
+; sets the vars in varstr with their respective expressions according to the index.
 gds(\
    if(i != 0,\
       "{d}" . sub("{varstr}", (i - 1) * ({len({varstr})}/3), index("{varstr}", "-", (i - 1) * ({len({varstr})}/3)) - ((i - 1) * ({len({varstr})}/3))),\
@@ -95,11 +102,14 @@ gds(\
 unset:
 i = (i % 4) + 1
 
+; unsets all vars in the varstr2 macro
 gu(\
    if({d}toggle == 0,\
       sub("{varstr2}", (i - 1) * 20, index("{varstr2}", "-", (i - 1) * 20) - (i - 1) * 20 ),\
    "")\
 )
+
+; goes to unset if toggle is off and if vars != 0. goes to wait if not towertesting. resets time if savedtimez isn't set.
 goto(\
    if({d}toggle == 1,\
       if(isTowerTesting(),\
